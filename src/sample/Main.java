@@ -1,40 +1,66 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import sample.views.Loteria;
 
-public class Main extends Application {
+public class Main extends Application{
 
-    Button btn1, btn2, btn3;
-    HBox hBox;
-    VBox vBox;
+    private BorderPane bdpPrincipal;
+    private MenuBar mnbOpciones;
+    private Menu menCompetencia1, menCompetencia2, menSalir;
+    private MenuItem mitLoteria, mitSalir;
+    private Scene escena;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-
-        btn1 = new Button("Botón1");
-        btn2 = new Button("Botón2");
-        btn3 = new Button("Boton3");
-        hBox = new HBox();
-        hBox.setSpacing(5.0);
-        hBox.getChildren().addAll(btn1,btn2,btn3);
-
-        vBox = new VBox();
-        vBox.setSpacing(5.0);
-        vBox.getChildren().addAll(btn1,btn2,btn3);
-
-        primaryStage.setTitle("Topicos Avanzados de Programación :)");
-        primaryStage.setScene(new Scene(vBox, 200, 400));
+        CrearUI();
+        escena = new Scene(bdpPrincipal);
+        primaryStage.setScene(escena);
+        primaryStage.setMaximized(true);
+        primaryStage.setTitle("Formulario Principal");
         primaryStage.show();
     }
 
+    private void CrearUI() {
+        bdpPrincipal = new BorderPane();
+        mnbOpciones = new MenuBar();
+        menCompetencia1 = new Menu("1er. Competencia");
+        menCompetencia2 = new Menu("2da. Competencia");
+        menSalir        = new Menu("Salir");
+        // Agregar menus al menubar
+        mnbOpciones.getMenus().addAll(menCompetencia1, menCompetencia2, menSalir);
+        bdpPrincipal.setTop(mnbOpciones);
+        // Instanciamos los MenuItems
+        mitLoteria = new MenuItem("Loteria");
+        /*mitLoteria.setOnAction(event -> {
+            new Loteria();
+        });*/
+        mitLoteria.setOnAction(event -> MenuOpciones(1));
+
+        menCompetencia1.getItems().addAll(mitLoteria);
+        mitSalir   = new MenuItem("Hasta luego...");
+        mitSalir.setOnAction(event -> MenuOpciones(20));
+
+        menSalir.getItems().add(mitSalir);
+    }
+
+    private void MenuOpciones(int opc){
+        switch (opc){
+            case 1: new Loteria(); break;
+            // aqui van los demás casos que se trabajarán en clase
+            case 20: System.exit(0);
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
