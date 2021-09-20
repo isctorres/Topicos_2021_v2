@@ -12,13 +12,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import sample.views.Loteria;
+import sample.views.Taquimecanografo;
 
 public class Main extends Application{
 
     private BorderPane bdpPrincipal;
     private MenuBar mnbOpciones;
     private Menu menCompetencia1, menCompetencia2, menSalir;
-    private MenuItem mitLoteria, mitSalir;
+    private MenuItem mitLoteria, mitTaqui, mitSalir;
     private Scene escena;
 
     @Override
@@ -42,12 +43,12 @@ public class Main extends Application{
         bdpPrincipal.setTop(mnbOpciones);
         // Instanciamos los MenuItems
         mitLoteria = new MenuItem("Loteria");
-        /*mitLoteria.setOnAction(event -> {
-            new Loteria();
-        });*/
-        mitLoteria.setOnAction(event -> MenuOpciones(1));
+        mitTaqui   = new MenuItem("Taquimecanógrafo");
 
-        menCompetencia1.getItems().addAll(mitLoteria);
+        mitLoteria.setOnAction(event -> MenuOpciones(1));
+        mitTaqui.setOnAction(event -> MenuOpciones(2));
+
+        menCompetencia1.getItems().addAll(mitLoteria,mitTaqui);
         mitSalir   = new MenuItem("Hasta luego...");
         mitSalir.setOnAction(event -> MenuOpciones(20));
 
@@ -57,6 +58,7 @@ public class Main extends Application{
     private void MenuOpciones(int opc){
         switch (opc){
             case 1: new Loteria(); break;
+            case 2: new Taquimecanografo(); break;
             // aqui van los demás casos que se trabajarán en clase
             case 20: System.exit(0);
         }
