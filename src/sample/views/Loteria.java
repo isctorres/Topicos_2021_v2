@@ -1,5 +1,7 @@
 package sample.views;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -12,6 +14,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 public class Loteria extends Stage {
 
@@ -38,6 +43,7 @@ public class Loteria extends Stage {
         hBox1 = new HBox();
         btnAtras = new Button("< Plantilla Anterior");
         btnSiguiente = new Button("Plantilla Siguiente >");
+        btnSiguiente.setOnAction(event -> iniciarJuego());
         hBox1.getChildren().addAll(btnAtras,btnSiguiente);
         hBox1.setSpacing(10);   // Clase 8
 
@@ -76,5 +82,25 @@ public class Loteria extends Stage {
         vBox.setPadding(new Insets(10));   // Clase 8
 
         escena = new Scene(vBox,600,510);
+    }
+
+    private void iniciarJuego() {
+        Timer timer = new Timer(1000, new ActionListener(){
+
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                Platform.runLater(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                imgCarta = new Image("sample/images/"+arImagenes[1]);
+                                ImageView view = new ImageView(imgCarta);
+                                lblCarta.setGraphic(view);
+                            }
+                        }
+                );
+            }
+        });
+        timer.start();
     }
 }

@@ -108,9 +108,9 @@ public class Taquimecanografo extends Stage implements EventHandler<KeyEvent> {
         switch (event.getCode().toString()){
             case "Q":
                 if( ban == false ) {
-                    arBtnTab[1].setStyle("-fx-background-color: blue");
-                }else{
                     arBtnTab[1].setStyle("-fx-background-color: gray");
+                }else{
+                    arBtnTab[1].setStyle("-fx-background-color: green");
                 }
                 break;
         }

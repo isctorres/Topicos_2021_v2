@@ -4,17 +4,15 @@ import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import sample.views.Loteria;
 import sample.views.Taquimecanografo;
 
-public class Main extends Application{
+public class Main extends Application implements EventHandler<WindowEvent>{
 
     private BorderPane bdpPrincipal;
     private MenuBar mnbOpciones;
@@ -27,6 +25,7 @@ public class Main extends Application{
         CrearUI();
         escena = new Scene(bdpPrincipal);
         primaryStage.setScene(escena);
+        primaryStage.addEventHandler(WindowEvent.WINDOW_SHOWING,this);
         primaryStage.setMaximized(true);
         primaryStage.setTitle("Formulario Principal");
         primaryStage.show();
@@ -66,5 +65,14 @@ public class Main extends Application{
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void handle(WindowEvent event) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información del sistema");
+        alerta.setHeaderText("Tópicos Avanzados de Programación");
+        alerta.setContentText("Bienvenido al sistema del curso de programación :)");
+        alerta.showAndWait();
     }
 }
