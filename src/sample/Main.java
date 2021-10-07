@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import sample.models.Conexion;
 import sample.views.Loteria;
 import sample.views.Taquimecanografo;
 
@@ -69,10 +70,16 @@ public class Main extends Application implements EventHandler<WindowEvent>{
 
     @Override
     public void handle(WindowEvent event) {
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setTitle("Información del sistema");
-        alerta.setHeaderText("Tópicos Avanzados de Programación");
-        alerta.setContentText("Bienvenido al sistema del curso de programación :)");
-        alerta.showAndWait();
+        try {
+            Conexion.getConexion();
+            System.out.println("Conexion establecida.....");
+        }catch (Exception e){
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Información del sistema");
+            alerta.setHeaderText("Tópicos Avanzados de Programación");
+            alerta.setContentText(e.getMessage());
+            alerta.showAndWait();
+            System.exit(0);
+        }
     }
 }
