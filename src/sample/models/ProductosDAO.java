@@ -1,5 +1,11 @@
 package sample.models;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class ProductosDAO {
 
     //public ProductosDAO(){}
@@ -31,24 +37,82 @@ public class ProductosDAO {
     // D -> Delete
 
     public void INSERT(){
-
+        try{
+            String query = "INSERT INTO tblProductos (nomProducto, idCategoria, stockProducto, precioProducto, costoProducto) " +
+                    "values('"+nomProducto+"',"+idCategoria+","+stockProducto+","+precioProducto+","+costoProducto+")";
+            Statement stmt = Conexion.conexion.createStatement();
+            stmt.executeUpdate(query);
+        }catch(Exception e){
+            e.printStackTrace(); // DEBUG MODE
+        }
     }
 
     public void UPDATE(){
-
+        try{
+            String query = "UPDATE tblProductos SET nomProducto = '"+nomProducto+"', idCategoria = "+idCategoria+", " +
+                    "stockProducto = "+stockProducto+", precioProducto = "+precioProducto+"," +
+                    "costoProducto =  WHERE idProducto = "+idProducto;
+            Statement stmt = Conexion.conexion.createStatement();
+            stmt.executeUpdate(query);
+        }catch(Exception e){
+            e.printStackTrace(); // DEBUG MODE
+        }
     }
 
     public void DELETE(){
-
+        try{
+            String query = "DELETE FROM tblProductos WHERE idProducto = "+idProducto;
+            Statement stmt = Conexion.conexion.createStatement();
+            stmt.executeUpdate(query);
+        }catch(Exception e){
+            e.printStackTrace(); // DEBUG MODE
+        }
     }
 
     // Recupera todos los registros de la tabla
-    public void SELECTALL(){
+    public ObservableList<ProductosDAO> SELECTALL(){
+        ObservableList<ProductosDAO> listaP = FXCollections.observableArrayList();
+        try {
+            ProductosDAO objP;
 
+            String query = "SELECT * FROM tblProductos";
+            Statement stmt = Conexion.conexion.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while(res.next()){
+                objP = new ProductosDAO();
+                objP.setIdProducto(res.getInt("idProducto"));
+                objP.setNomProducto(res.getString("nomProducto"));
+                objP.setIdCategoria(res.getInt("idCategoria"));
+                objP.setStockProducto(res.getInt("stockProducto"));
+                objP.setPrecioProducto(res.getFloat("precioProducto"));
+                objP.setCostoProducto(res.getFloat("costoProducto"));
+                listaP.add(objP);
+            }
+        }catch (Exception e){
+            e.printStackTrace(); // DEBUG MODE
+        }
+        return listaP;
     }
 
     // Recupera solo un registro identificado por el id
-    public void SELECTID(){
-
+    public ProductosDAO SELECTID(){
+        ProductosDAO objP = null;
+        try {
+            String query = "SELECT * FROM tblProductos where idProducto = " + idProducto;
+            Statement stmt = Conexion.conexion.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            if( res.next() ){
+                objP = new ProductosDAO();
+                objP.setIdProducto(res.getInt("idProducto"));
+                objP.setNomProducto(res.getString("nomProducto"));
+                objP.setIdCategoria(res.getInt("idCategoria"));
+                objP.setStockProducto(res.getInt("stockProducto"));
+                objP.setPrecioProducto(res.getFloat("precioProducto"));
+                objP.setCostoProducto(res.getFloat("costoProducto"));
+            }
+        }catch (Exception e){
+            e.printStackTrace(); //DEBUG MODE
+        }
+        return objP;
     }
 }

@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import sample.models.Conexion;
 import sample.views.Loteria;
+import sample.views.Productos;
 import sample.views.Taquimecanografo;
 
 public class Main extends Application implements EventHandler<WindowEvent>{
@@ -18,7 +19,7 @@ public class Main extends Application implements EventHandler<WindowEvent>{
     private BorderPane bdpPrincipal;
     private MenuBar mnbOpciones;
     private Menu menCompetencia1, menCompetencia2, menSalir;
-    private MenuItem mitLoteria, mitTaqui, mitSalir;
+    private MenuItem mitLoteria, mitTaqui, mitTienda, mitSalir;
     private Scene escena;
 
     @Override
@@ -44,11 +45,13 @@ public class Main extends Application implements EventHandler<WindowEvent>{
         // Instanciamos los MenuItems
         mitLoteria = new MenuItem("Loteria");
         mitTaqui   = new MenuItem("Taquimecanógrafo");
+        mitTienda  = new MenuItem("Tienda");
 
         mitLoteria.setOnAction(event -> MenuOpciones(1));
         mitTaqui.setOnAction(event -> MenuOpciones(2));
+        mitTienda.setOnAction(event -> MenuOpciones(3));
 
-        menCompetencia1.getItems().addAll(mitLoteria,mitTaqui);
+        menCompetencia1.getItems().addAll(mitLoteria,mitTaqui,mitTienda);
         mitSalir   = new MenuItem("Hasta luego...");
         mitSalir.setOnAction(event -> MenuOpciones(20));
 
@@ -59,6 +62,7 @@ public class Main extends Application implements EventHandler<WindowEvent>{
         switch (opc){
             case 1: new Loteria(); break;
             case 2: new Taquimecanografo(); break;
+            case 3: new Productos(); break;
             // aqui van los demás casos que se trabajarán en clase
             case 20: System.exit(0);
         }
