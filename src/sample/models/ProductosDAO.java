@@ -51,7 +51,7 @@ public class ProductosDAO {
         try{
             String query = "UPDATE tblProductos SET nomProducto = '"+nomProducto+"', idCategoria = "+idCategoria+", " +
                     "stockProducto = "+stockProducto+", precioProducto = "+precioProducto+"," +
-                    "costoProducto =  WHERE idProducto = "+idProducto;
+                    "costoProducto = "+costoProducto+" WHERE idProducto = "+idProducto;
             Statement stmt = Conexion.conexion.createStatement();
             stmt.executeUpdate(query);
         }catch(Exception e){

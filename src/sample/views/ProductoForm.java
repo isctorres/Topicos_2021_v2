@@ -18,8 +18,12 @@ public class ProductoForm extends Stage {
     private ProductosDAO objPDAO;
     private TableView<ProductosDAO> tbvProductos;
 
-    public ProductoForm(TableView<ProductosDAO> tbvProductos){
+    public ProductoForm(TableView<ProductosDAO> tbvProductos, ProductosDAO objPDAO){
         this.tbvProductos = tbvProductos;
+        if( objPDAO != null )
+            this.objPDAO = objPDAO;             // La acción es una actualización
+        else
+            this.objPDAO = new ProductosDAO();  // La acción es una inserción
         CrearUI();
         this.setTitle("Gestión de Producto");
         this.setScene(escena);
@@ -27,18 +31,26 @@ public class ProductoForm extends Stage {
     }
 
     private void CrearUI() {
-        objPDAO = new ProductosDAO();
-
         txtNombre = new TextField();
         txtNombre.setPromptText("Nombre del producto");
+        txtNombre.setText(objPDAO.getNomProducto());
+
         txtCategoria = new TextField();
         txtCategoria.setPromptText("Categoria del Producto");
+        txtCategoria.setText( String.valueOf(objPDAO.getIdCategoria()));
+
         txtStock = new TextField();
         txtStock.setPromptText("Número de existencias");
+        txtStock.setText(String.valueOf(objPDAO.getStockProducto()));
+
         txtPrecio = new TextField();
         txtPrecio.setPromptText("Precio Sugerido");
+        txtPrecio.setText(String.valueOf(objPDAO.getPrecioProducto()));
+
         txtCosto = new TextField();
         txtCosto.setPromptText("Costo del producto");
+        txtCosto.setText(String.valueOf(objPDAO.getCostoProducto()));
+
         btnGuardar = new Button("Guardar");
         btnGuardar.setOnAction(event -> {
             objPDAO.setNomProducto(txtNombre.getText());
@@ -46,7 +58,11 @@ public class ProductoForm extends Stage {
             objPDAO.setStockProducto(Integer.parseInt(txtStock.getText()));
             objPDAO.setPrecioProducto(Float.parseFloat(txtPrecio.getText()));
             objPDAO.setCostoProducto(Float.parseFloat(txtCosto.getText()));
-            objPDAO.INSERT();
+
+            if( objPDAO.getIdProducto() > 0 )
+                objPDAO.UPDATE();
+            else
+                objPDAO.INSERT();
 
             tbvProductos.setItems(objPDAO.SELECTALL());
             tbvProductos.refresh();

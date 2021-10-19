@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import sample.models.ProductosDAO;
+import sample.views.ProductoForm;
 import sample.views.Productos;
 
 import java.util.Optional;
@@ -16,9 +17,12 @@ public class CellCustome extends TableCell<ProductosDAO, String> {
 
     public CellCustome(int opc){
         this.opc = opc;
-        if( opc == 1) {
+        if( opc == 1) { // Edición
             btnCelda = new Button("Editar");
-            btnCelda.setOnAction(event -> {});
+            btnCelda.setOnAction(event -> {
+                objPDAO = CellCustome.this.getTableView().getItems().get(CellCustome.this.getIndex());
+                new ProductoForm(CellCustome.this.getTableView(), objPDAO);
+            });
         }else{
             btnCelda = new Button("Borrar");
             btnCelda.setOnAction(event -> {

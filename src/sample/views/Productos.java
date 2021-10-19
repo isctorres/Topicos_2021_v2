@@ -29,7 +29,7 @@ public class Productos extends Stage {
         tbvProductos = new TableView<>();
         btnNuevo = new Button("Nuevo Producto");
         btnNuevo.setOnAction(event -> {
-            new ProductoForm(tbvProductos);
+            new ProductoForm(tbvProductos, null);
         });
         vBox = new VBox();
         vBox.setSpacing(10.0);
